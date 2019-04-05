@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>addJob</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="offcanvas.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script> 
+    
+    <script>
+        data = "23";
+        function selectById() {
+            var href = window.location.search;
+            var createId = href.substring(href.length - 4);
+            $.ajax({
+                url: "http://localhost:8080/job/queryJobDetail",
+                type: "POST",
+                async: false,
+                data: {"createId":createId},
+                dataType: "json",
+                xhrFields: {
+                    withCredentials:true
+                },
+                success: function (result) {
+                    data = JSON.parse(result);
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+        }
+
+        selectById();
+    </script>
+    
+  </head>
+
+  <body>
+    <nav class="navbar navbar-fixed-top navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">大学生就业信息发布平台</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  </a></li>
+          </ul>
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="individual.html">用户</a></li>
+          </ul>
+        </div><!-- /.nav-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+
+    <div class="container">
+
+      <div class="row row-offcanvas row-offcanvas-right">
+
+        <div class="col-xs-12 col-sm-9">
+          <p class="pull-right visible-xs">
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+          </p>
+          <div class="jumbotron">
+            <h1>你好，用户</h1>
+            <p>请修改您的岗位：</p>
+          </div>
+          <div class="row">
+           
+          		<form class="form-horizontal col-md-11">
+				  <div class="form-group">
+				    <label for="inputEmail3" class="col-sm-2 control-label">公司名</label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" id="companyName">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="inputText" class="col-sm-2 control-label">岗位名</label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" id="jobName">
+				    </div>
+				  </div>
+				  
+				  <div class="form-group">
+				    <label for="inputText" class="col-sm-2 control-label">需要人数</label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" id="needNum">
+				    </div>
+				  </div>
+				  
+				  <div class="form-group">
+				    <label for="inputText" class="col-sm-2 control-label">专业</label>
+				    <div class="col-sm-10">
+				      <input type="textarea" class="form-control" id="major">
+				    </div>
+				  </div>
+				  
+				  <div class="form-group">
+				    <label for="inputText" class="col-sm-2 control-label">技能</label>
+				    <div class="col-sm-10">
+				      <input type="textarea" class="form-control" id="skill">
+				    </div>
+				  </div>
+				  
+				  <div class="form-group">
+				    <label for="inputText" class="col-sm-2 control-label">其他</label>
+				    <div class="col-sm-10">
+				      <input type="textarea" class="form-control" id="other">
+				    </div>
+				  </div>
+				  
+				  <div class="form-group">
+				    <div class="col-sm-offset-2 col-sm-10">
+				        
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <div class="col-sm-offset-5 col-sm-10 ">
+				      <button type="button" class="btn btn-default" onclick="update()">确认修改</button>
+				    </div>
+				  </div>
+				</form>
+            
+          </div><!--/row-->
+        </div><!--/.col-xs-12.col-sm-9-->
+
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+          <div class="list-group">
+            <a href="#" class="list-group-item active"></a>
+            <a href="#" class="list-group-item">拉钩网</a>
+            <a href="#" class="list-group-item">Boss直聘</a>
+            <a href="#" class="list-group-item">牛客网</a>
+            <a href="update.html" class="list-group-item">修改</a>
+            <a href="add.html" class="list-group-item">发布</a>
+          </div>
+        </div><!--/.sidebar-offcanvas-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; Company 2014</p>
+      </footer>
+
+    </div><!--/.container-->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="offcanvas.js"></script>
+    
+    
+    <script type="text/javascript">
+    	
+    	$("#companyName").attr("value", data.companyName);
+    	$("#jobName").attr("value", data.jobName);
+    	$("#skill").attr("value", data.skill);
+    	$("#needNum").attr("value", data.needNums);
+    	$("#other").attr("value", data.other);
+    	$("#major").attr("value", data.major);
+    	function update() {
+    		$.ajax({
+            url: "http://localhost:8080/job/updateJob",//要请求的服务器url
+            data: {
+               "companyName": $("#companyName").val(),
+                "jobName": $("#jobName").val(),
+                "needNums": $("#needNum").val(),
+                "skill": $("#skill").val(),
+                "other": $("#other").val(),
+                "major": $("#major").val(),
+                "createId": data.createId.toString()
+            },
+            xhrFields: {
+                withCredentials:true
+            },
+            type: "POST", //请求方式为POST
+            dataType: "json",   //服务器返回的数据是什么类型 
+            success: function(result){  //这个方法会在服务器执行成功是被调用 ，参数result就是服务器返回的值(现在是json类型)
+            	var result = JSON.parse(result);
+                if (result.result) {
+                    alert("修改成功");
+                    //bunengtiaozhuan
+                    window.location.href = "individual.html?id=" + data.id;
+                } else {
+                    alert("false");
+                }
+            },
+            error: function(a) {
+            	alert("error");
+            }
+        });
+    	}
+    </script>
+    
+  </body>
+</html>

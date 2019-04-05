@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- The above 2 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Note there is no responsive meta tag here -->
+
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Non-responsive Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="non-responsive.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+
+    <script>
+
+
+        function getData() {
+            var href = window.location.search;
+            var createId = href.substring(href.length - 4);
+            data = "lal";
+            $.ajax({
+                url: "http://localhost:8080/job/displayJobDetailByCreateId",
+                type: "POST",
+                async: false,
+                data: {"createId":createId},
+                dataType: "json",
+                xhrFields: {
+                    withCredentials:true
+                },
+                success: function (result) {
+                    data = JSON.parse(result);
+                },
+                error: function () {
+                    alert("请登录后查看！");
+                    window.location.href = "index.html"
+                }
+            });
+        }
+
+        getData();
+
+
+        function formatDate(date) {
+            dates = date.split("/");
+            if(dates.length == 3) {
+                if(dates[1].length == 1) {
+                    dates[1] = "0" + dates[1];
+                }
+                if (dates[2].length == 1) {
+                    dates[2] = "0" + dates[2];
+                }
+                date = dates.join("-");
+                return date;
+            } else {
+                return null;
+            }
+        }
+        function parseTime(timestamp) {
+            var date = new Date(parseInt(timestamp)).toLocaleDateString();
+            //输出结果为2016/8/9
+            date = formatDate(date);
+            //输出结果为2016-08-09，满足YYYY-MM-DD格式要求
+            return date;
+        }
+
+
+        data.createDate = parseTime(data.createDate);
+        data.updateDate = parseTime(data.updateDate);
+
+    </script>
+  </head>
+
+  <body>
+
+	<script src="js/head.js"></script>
+    <div class="container">
+
+      <div class="page-header">
+     <script>
+         document.writeln("<h1>" + data.companyName + "</h1>");
+      document.writeln("    岗位名称    <p class=\'lead\'>" + data.jobName + "</p>");
+      document.writeln("      </div>");
+      document.writeln("");
+      document.writeln("   创建时间   <h3>" + data.createDate + "</h3>");
+      document.writeln("   修改时间   <p>" + data.updateDate + "</p>");
+      document.writeln("");
+      document.writeln("   需要人数   <h3>" + data.needNums + "</h3>");
+      document.writeln("    技能  <p>" + data.skill + "</p>");
+      document.writeln("");
+      document.writeln("   专业   <h3>" + data.major + "</h3>");
+      document.writeln("   其他   <p>" + data.other + "</p>");
+     </script>
+      </div>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

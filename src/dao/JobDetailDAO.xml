@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.JobDetailDAO">
+    <insert id="insertJob" keyProperty="createId" useGeneratedKeys="true" parameterType="entity.JobDetail">
+        insert into JobDetail(id, createDate, companyName, jobName,updateDate, needNums, skill, major, other)
+        value(#{id}, #{createDate}, #{companyName}, #{jobName},#{updateDate}, #{needNums}, #{skill}, #{major}, #{other})
+    </insert>
+    <select id="displayJob" resultType="entity.JobDetail">
+        select * from JobDetail;
+    </select>
+    <select id="queryJobByCreateId" resultType="entity.JobDetail">
+        select * from JobDetail where createId=#{createId};
+    </select>
+    <delete id="deleteJobByCreateId" parameterType="int">
+        delete from JobDetail where createId=#{createId};
+    </delete>
+    <select id="displayJobById" resultType="entity.JobDetail">
+        select * from JobDetail where id=#{id};
+    </select>
+    <update id="updateJob" parameterType="entity.JobDetail">
+        update JobDetail set companyName=#{companyName}, jobName=#{jobName},updateDate=#{updateDate}, needNums=#{needNums}, skill=#{skill}, major=#{major}, other=#{other}
+          where createId=#{createId};
+    </update>
+</mapper>

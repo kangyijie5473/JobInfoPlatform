@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+    <!-- 配置DB 1.加载驱动文件 -->
+    <context:property-placeholder location="WEB-INF/db.properties"/>
+
+    <!-- 配置DB 2.配置数据源 -->
+        <bean id="jdbcDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        <property name="url" value="${url}"></property>
+        <property name="username" value="muxin"></property>
+        <property name="password" value="muxin"></property>
+    </bean>
+    <!--配置mybatis的会话工厂  -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="jdbcDataSource"></property>
+        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+    </bean>
+    <!--配置组件扫描  -->
+    <context:component-scan base-package="controller,dao,entity,Service"></context:component-scan>
+    <!--配置mapper扫描  -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer ">
+        <property name="basePackage" value="dao"></property>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+
+    <!--配置视图解析器  -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+    <!--开始mvc注解扫描  -->
+    <mvc:annotation-driven/>
+    <!--映射静态资源  -->
+    <mvc:resources location="/" mapping="*.html"></mvc:resources>
+    <mvc:resources location="/fonts/" mapping="/fonts/**"></mvc:resources>
+    <mvc:resources location="/js/" mapping="/js/**"></mvc:resources>
+    <mvc:resources location="/css/" mapping="/css/**"></mvc:resources>
+
+</beans>
